@@ -18,7 +18,15 @@ jobs:
         run: unzip -q honor-mod-source.zip
       - name: Build
         working-directory: honor-mod
-        run: gradle build --stacktrace
+        run: gradle build --stacktrace > build.log 2>&1
+      - name: Show errors
+        if: failure()
+        working-directory: honor-mod
+        run: |
+          echo "===== FIRST 50 LINES ====="
+          head -50 build.log
+          echo "===== ERROR LINES ====="
+          grep -n -m 30 -E "error:|What went wrong|Could not|Caused by|not found|Unsupported" build.log || true
       - uses: actions/upload-artifact@v4
         with:
           name: honor-mod-jar
