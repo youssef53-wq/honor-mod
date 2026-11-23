@@ -15,7 +15,7 @@ jobs:
         with:
           gradle-version: 9.5.1
       - name: Unzip project
-        run: unzip -q honor-mod-source.zip
+        run: unzip -q *.zip
       - name: Build
         working-directory: honor-mod
         run: gradle build --stacktrace > build.log 2>&1
